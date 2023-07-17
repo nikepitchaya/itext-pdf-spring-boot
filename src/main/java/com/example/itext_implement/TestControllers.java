@@ -22,7 +22,8 @@ public class TestControllers {
             writer.setPageEvent(event);
             document.open();
 
-            BaseFont thaiFont = BaseFont.createFont("DB Helvethaica X v3.2.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont thaiFont = BaseFont.createFont("DB Helvethaica X v3.2.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED);
             Font font = new Font(thaiFont, 16, Font.NORMAL, BaseColor.BLACK);
             Paragraph title = new Paragraph("ใบเสร็จรับเงิน", font);
             title.setAlignment(Element.ALIGN_CENTER);
@@ -60,14 +61,15 @@ public class TestControllers {
 
             document.close();
 
-            return "Success";
+            return "Itext Success";
         } catch (DocumentException | IOException e) {
-            return "";
+            return "Error";
         }
     }
 
     private void addTableHeader(PdfPTable table, Font thaiFont) {
-        String[] headers = {"No.", "เลขที่เคลม", "จ่ายโดย", "จำนวนเงิน", "VAT", "จำนวนรวม", "ใบแจ้งหนี้/ใบกำกับ/หมายเหตุ"};
+        String[] headers = { "No.", "เลขที่เคลม", "จ่ายโดย", "จำนวนเงิน", "VAT", "จำนวนรวม",
+                "ใบแจ้งหนี้/ใบกำกับ/หมายเหตุ" };
         for (String header : headers) {
             PdfPCell cell = new PdfPCell(new Phrase(header, thaiFont));
             cell.setBackgroundColor(BaseColor.PINK);
@@ -76,7 +78,12 @@ public class TestControllers {
     }
 
     private void addRows(PdfPTable table, Font thaiFont) {
-        String[][] rowData = {{"1", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST"}};
+        String[][] rowData = {
+                { "1", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST" },
+                { "1", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST" },
+                { "1", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST" },
+                { "1", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST" },
+                { "1", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST" } };
         for (String[] row : rowData) {
             for (String cellData : row) {
                 table.addCell(cellData);
@@ -95,7 +102,8 @@ public class TestControllers {
         private Font font;
 
         public CustomPageEvent() throws IOException, DocumentException {
-            BaseFont thaiFont = BaseFont.createFont("fonts/Sarabun/THSarabunNew.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont thaiFont = BaseFont.createFont("fonts/Sarabun/THSarabunNew.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED);
             font = new Font(thaiFont, 16, Font.NORMAL, BaseColor.BLACK);
             logo = Image.getInstance("E:\\Spring boots\\itext_implement\\src\\main\\resources\\static\\Java_logo.png");
             logo.scaleToFit(100, 100);
@@ -108,8 +116,10 @@ public class TestControllers {
             PdfContentByte canvas = writer.getDirectContent();
             int width = (int) document.getPageSize().getWidth();
             int height = (int) document.getPageSize().getHeight();
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(String.format("หน้า %d", page), font), width - 36, height - 36, 0);
-            if (page == 1) document.setMargins(36, 36, 130, 36);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(String.format("หน้า %d", page), font),
+                    width - 36, height - 36, 0);
+            if (page == 1)
+                document.setMargins(36, 36, 130, 36);
             if (page >= 2) {
                 float logoX = (document.getPageSize().getWidth() - 100) / 2;
                 float logoY = document.getPageSize().getHeight() - 100;
@@ -122,5 +132,3 @@ public class TestControllers {
         }
     }
 }
-
-

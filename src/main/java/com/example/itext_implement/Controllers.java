@@ -21,14 +21,15 @@ public class Controllers {
         try {
             Document document = new Document();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("test.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, output);
             CustomPageEvent event = new CustomPageEvent();
             document.setMargins(36, 36, 36, 36);
             writer.setPageEvent(event);
 
             document.open();
 
-            BaseFont thaiFont = BaseFont.createFont("fonts/Helvethaica/DB Helvethaica X v3.2.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont thaiFont = BaseFont.createFont("fonts/Helvethaica/DB Helvethaica X v3.2.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED);
             Font font = new Font(thaiFont, 16, Font.NORMAL, BaseColor.BLACK);
             Paragraph title = new Paragraph("ใบเสร็จรับเงิน", font);
             title.setAlignment(Element.ALIGN_CENTER);
@@ -42,12 +43,15 @@ public class Controllers {
             addRows(table, font, reqparams);
             document.add(table);
 
-            Paragraph total = new Paragraph("รวมเป็นเงินทั้งสิ้น " + reqparams.getTotalPayamt() + " (" + reqparams.getTotalPayamtThai() + ")", font);
+            Paragraph total = new Paragraph(
+                    "รวมเป็นเงินทั้งสิ้น " + reqparams.getTotalPayamt() + " (" + reqparams.getTotalPayamtThai() + ")",
+                    font);
             total.setAlignment(Element.ALIGN_LEFT);
             document.add(total);
 
             String dot = "............................................................................";
-            Paragraph signatures = new Paragraph("จำนวนรายการ" + reqparams.getRowPayee().length + "เคลม" + "ลงชื่อผู้รับเอกสาร/ผู้นัด" + dot, font);
+            Paragraph signatures = new Paragraph(
+                    "จำนวนรายการ" + reqparams.getRowPayee().length + "เคลม" + "ลงชื่อผู้รับเอกสาร/ผู้นัด" + dot, font);
             signatures.setAlignment(Element.ALIGN_LEFT);
             document.add(signatures);
 
@@ -75,7 +79,8 @@ public class Controllers {
     }
 
     private void addTableHeader(PdfPTable table, Font thaiFont) {
-        String[] headers = {"No.", "เลขที่เคลม", "จ่ายโดย", "จำนวนเงิน", "VAT", "จำนวนรวม", "ใบแจ้งหนี้/ใบกำกับ/หมายเหตุ"};
+        String[] headers = { "No.", "เลขที่เคลม", "จ่ายโดย", "จำนวนเงิน", "VAT", "จำนวนรวม",
+                "ใบแจ้งหนี้/ใบกำกับ/หมายเหตุ" };
         for (String header : headers) {
             PdfPCell cell = new PdfPCell(new Phrase(header, thaiFont));
             cell.setBackgroundColor(BaseColor.PINK);
@@ -100,13 +105,16 @@ public class Controllers {
     private class CustomPageEvent extends PdfPageEventHelper {
         private Image logo;
         private Font font;
+
         public CustomPageEvent() throws IOException, DocumentException {
-            BaseFont thaiFont = BaseFont.createFont("fonts/Helvethaica/DB Helvethaica X v3.2.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont thaiFont = BaseFont.createFont("fonts/Helvethaica/DB Helvethaica X v3.2.ttf", BaseFont.IDENTITY_H,
+                    BaseFont.EMBEDDED);
             font = new Font(thaiFont, 16, Font.NORMAL, BaseColor.BLACK);
             logo = Image.getInstance("E:\\Spring boots\\itext_implement\\src\\main\\resources\\static\\Java_logo.png");
             logo.scaleToFit(100, 100);
             logo.setAlignment(Image.ALIGN_TOP);
         }
+
         @Override
         public void onStartPage(PdfWriter writer, Document document) {
             int page = writer.getPageNumber();
@@ -114,8 +122,10 @@ public class Controllers {
             PdfContentByte canvas = writer.getDirectContent();
             int width = (int) document.getPageSize().getWidth();
             int height = (int) document.getPageSize().getHeight();
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(String.format("หน้า %d", page), font), width - 36, height - 36, 0);
-            if (marginPage > 1) document.setMargins(36, 36, 130, 36);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(String.format("หน้า %d", page), font),
+                    width - 36, height - 36, 0);
+            if (marginPage > 1)
+                document.setMargins(36, 36, 130, 36);
             if (page > 1) {
                 float logoX = (document.getPageSize().getWidth() - 100) / 2;
                 float logoY = document.getPageSize().getHeight() - 100;
@@ -128,5 +138,3 @@ public class Controllers {
         }
     }
 }
-
-
