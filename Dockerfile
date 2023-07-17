@@ -1,11 +1,17 @@
-# Use official base image of Java Runtime
-FROM openjdk:16-alpine
+# Use official base image of Java Runtim
+FROM openjdk:8-jdk-alpine
 
-# Who is MAINTAINER
-MAINTAINER Pitchaya Kacharatpaisal, kacharatpaisal.p@gmail.com
+# Set volume point to /tmp
+VOLUME /tmp
 
-# Copy jar file to container
-COPY ./target/backend-api.jar backend-api.jar
-
-# Set port
+# Make port 8080 available to the world outside container
 EXPOSE 8080
+
+# Set application's JAR file
+ARG JAR_FILE=target/hello-docker-0.0.1-SNAPSHOT.jar
+
+# Add the application's JAR file to the container
+ADD ${JAR_FILE} app.jar
+
+# Run the JAR file
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
