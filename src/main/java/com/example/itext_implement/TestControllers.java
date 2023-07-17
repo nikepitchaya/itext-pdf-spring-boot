@@ -105,9 +105,9 @@ public class TestControllers {
             BaseFont thaiFont = BaseFont.createFont("fonts/Sarabun/THSarabunNew.ttf", BaseFont.IDENTITY_H,
                     BaseFont.EMBEDDED);
             font = new Font(thaiFont, 16, Font.NORMAL, BaseColor.BLACK);
-            logo = Image.getInstance("E:\\Spring boots\\itext_implement\\src\\main\\resources\\static\\Java_logo.png");
-            logo.scaleToFit(100, 100);
-            logo.setAlignment(Image.ALIGN_TOP);
+            // logo = Image.getInstance("E:\\Spring boots\\itext_implement\\src\\main\\resources\\static\\Java_logo.png");
+            // logo.scaleToFit(100, 100);
+            // logo.setAlignment(Image.ALIGN_TOP);
         }
 
         @Override
@@ -121,13 +121,13 @@ public class TestControllers {
             if (page == 1)
                 document.setMargins(36, 36, 130, 36);
             if (page >= 2) {
-                float logoX = (document.getPageSize().getWidth() - 100) / 2;
-                float logoY = document.getPageSize().getHeight() - 100;
-                try {
-                    canvas.addImage(logo, logo.getScaledWidth(), 0, 0, logo.getScaledHeight(), logoX, logoY);
-                } catch (DocumentException e) {
-                    throw new RuntimeException(e);
-                }
+                // float logoX = (document.getPageSize().getWidth() - 100) / 2;
+                // float logoY = document.getPageSize().getHeight() - 100;
+                // try {
+                //     canvas.addImage(logo, logo.getScaledWidth(), 0, 0, logo.getScaledHeight(), logoX, logoY);
+                // } catch (DocumentException e) {
+                //     throw new RuntimeException(e);
+                // }
             }
         }
     }

@@ -110,30 +110,31 @@ public class Controllers {
             BaseFont thaiFont = BaseFont.createFont("fonts/Helvethaica/DB Helvethaica X v3.2.ttf", BaseFont.IDENTITY_H,
                     BaseFont.EMBEDDED);
             font = new Font(thaiFont, 16, Font.NORMAL, BaseColor.BLACK);
-            logo = Image.getInstance("E:\\Spring boots\\itext_implement\\src\\main\\resources\\static\\Java_logo.png");
-            logo.scaleToFit(100, 100);
-            logo.setAlignment(Image.ALIGN_TOP);
+            // logo = Image.getInstance("E:\\Spring
+            // boots\\itext_implement\\src\\main\\resources\\static\\Java_logo.png");
+            // logo.scaleToFit(100, 100);
+            // logo.setAlignment(Image.ALIGN_TOP);
         }
 
         @Override
         public void onStartPage(PdfWriter writer, Document document) {
             int page = writer.getPageNumber();
-            int marginPage = page + 1;
             PdfContentByte canvas = writer.getDirectContent();
             int width = (int) document.getPageSize().getWidth();
             int height = (int) document.getPageSize().getHeight();
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(String.format("หน้า %d", page), font),
                     width - 36, height - 36, 0);
-            if (marginPage > 1)
+            if (page == 1)
                 document.setMargins(36, 36, 130, 36);
             if (page > 1) {
-                float logoX = (document.getPageSize().getWidth() - 100) / 2;
-                float logoY = document.getPageSize().getHeight() - 100;
-                try {
-                    canvas.addImage(logo, logo.getScaledWidth(), 0, 0, logo.getScaledHeight(), logoX, logoY);
-                } catch (DocumentException e) {
-                    throw new RuntimeException(e);
-                }
+                // float logoX = (document.getPageSize().getWidth() - 100) / 2;
+                // float logoY = document.getPageSize().getHeight() - 100;
+                // try {
+                // canvas.addImage(logo, logo.getScaledWidth(), 0, 0, logo.getScaledHeight(),
+                // logoX, logoY);
+                // } catch (DocumentException e) {
+                // throw new RuntimeException(e);
+                // }
             }
         }
     }
